@@ -1,0 +1,15 @@
+{
+  "name": "@galaxy-stack/quasar-sdk",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Galaxy Quasar extension contract — core-api schema, manifest schema and the multi-language (TS/Rust/Python) SDK generator. Single source of truth; consumers run the generator and commit their artifacts.",
+  "type": "module",
+  "scripts": {
+    "generate": "node generate-extension-sdk.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/galaxy-quasar/quasar-extension-sdk.git"
+  },
+  "license": "MIT"
+}

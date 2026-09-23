@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://galaxy-quasar.local/extensions/manifest.schema.json",
+  "title": "Galaxy Quasar Extension Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "version", "runtime"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "coreApiVersion": {
+      "type": "string",
+      "const": "0.1.0",
+      "description": "Galaxy Core API contract version required by this extension. Omit only for legacy manifests."
+    },
+    "runtime": {
+      "type": "string",
+      "enum": ["node", "python", "webview", "internal"]
+    },
+    "permissions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "activationEvents": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "networkOutbound": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allowedHosts": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "default": []
+        }
+      },
+      "default": {}
+    },
+    "contributes": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tools": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "description", "inputSchema"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "description": { "type": "string", "minLength": 1 },
+              "inputSchema": { "type": "object" }
+            }
+          }
+        },
+        "commands": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "title"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "title": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "views": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "type", "title"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "type": { "type": "string", "minLength": 1 },
+              "title": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      },
+      "default": {}
+    }
+  }
+}

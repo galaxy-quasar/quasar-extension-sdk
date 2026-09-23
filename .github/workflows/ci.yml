@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Schema & generator validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate artifacts into temp dir (fails on schema drift)
+        run: node generate-extension-sdk.mjs --ts /tmp/q.ts --rust /tmp/q.rs --python /tmp/q.py --schema-copy-dir /tmp
+      - name: Artifacts are non-empty
+        run: test -s /tmp/q.ts && test -s /tmp/q.rs && test -s /tmp/q.py

@@ -1,0 +1,1339 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://galaxy-quasar.local/extensions/core-api.schema.json",
+  "title": "Galaxy Core Extension API",
+  "apiVersion": "0.1.0",
+  "types": {
+    "EmptyPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    },
+    "EmptyResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    },
+    "TtsSpeakPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text"],
+      "properties": {
+        "text": { "type": "string" },
+        "engine": { "type": "string" },
+        "rate": { "type": "string" }
+      }
+    },
+    "TtsSpeakResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["engine", "textLength"],
+      "properties": {
+        "engine": { "type": "string" },
+        "textLength": { "type": "integer" }
+      }
+    },
+    "StorageSetPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "value"],
+      "properties": {
+        "key": { "type": "string" },
+        "value": {}
+      }
+    },
+    "StorageGetPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key"],
+      "properties": {
+        "key": { "type": "string" }
+      }
+    },
+    "StorageValueResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "found"],
+      "properties": {
+        "key": { "type": "string" },
+        "found": { "type": "boolean" },
+        "value": {}
+      }
+    },
+    "RecordsUpsertPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["collection", "id", "value"],
+      "properties": {
+        "collection": { "type": "string" },
+        "id": { "type": "string" },
+        "value": {}
+      }
+    },
+    "RecordsListPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["collection"],
+      "properties": {
+        "collection": { "type": "string" },
+        "limit": { "type": "integer" }
+      }
+    },
+    "RecordsDeletePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["collection", "id"],
+      "properties": {
+        "collection": { "type": "string" },
+        "id": { "type": "string" }
+      }
+    },
+    "RecordsRecordResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record"],
+      "properties": {
+        "record": {}
+      }
+    },
+    "RecordsListResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["records"],
+      "properties": {
+        "records": {
+          "type": "array",
+          "items": {}
+        }
+      }
+    },
+    "FilesWriteTextPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "content"],
+      "properties": {
+        "path": { "type": "string" },
+        "content": { "type": "string" }
+      }
+    },
+    "FilesWriteBase64Payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "base64"],
+      "properties": {
+        "path": { "type": "string" },
+        "base64": { "type": "string" }
+      }
+    },
+    "FilesPathPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": { "type": "string" }
+      }
+    },
+    "FilesWriteResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "resolvedPath"],
+      "properties": {
+        "path": { "type": "string" },
+        "resolvedPath": { "type": "string" },
+        "length": { "type": "integer" },
+        "byteLength": { "type": "integer" }
+      }
+    },
+    "FilesReadTextResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "resolvedPath", "content"],
+      "properties": {
+        "path": { "type": "string" },
+        "resolvedPath": { "type": "string" },
+        "content": { "type": "string" },
+        "startLine": { "type": "integer" },
+        "endLine": { "type": "integer" },
+        "nextLine": { "type": "integer" },
+        "truncated": { "type": "boolean" },
+        "contentSha256": { "type": "string" }
+      }
+    },
+    "FilesPathResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "resolvedPath"],
+      "properties": {
+        "path": { "type": "string" },
+        "resolvedPath": { "type": "string" }
+      }
+    },
+    "ArtifactRegisterPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "mimeType", "kind"],
+      "properties": {
+        "path": { "type": "string" },
+        "mimeType": { "type": "string" },
+        "kind": { "type": "string" },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "retention": { "type": "string" }
+      }
+    },
+    "ArtifactListPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "type": "string" },
+        "limit": { "type": "integer" }
+      }
+    },
+    "ArtifactIdPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string" }
+      }
+    },
+    "ArtifactReadTextPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string" },
+        "cursor": { "type": "integer" },
+        "maxBytes": { "type": "integer" }
+      }
+    },
+    "ArtifactReadTextResultData": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "ArtifactResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact"],
+      "properties": {
+        "artifact": {}
+      }
+    },
+    "ArtifactListResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifacts"],
+      "properties": {
+        "artifacts": {
+          "type": "array",
+          "items": {}
+        }
+      }
+    },
+    "AgentRunPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prompt"],
+      "properties": {
+        "prompt": { "type": "string" },
+        "assistantMode": { "type": "boolean" },
+        "allowTools": { "type": "boolean" }
+      }
+    },
+    "AgentRunResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prompt", "content", "provider", "model", "assistantMode", "allowTools"],
+      "properties": {
+        "prompt": { "type": "string" },
+        "content": { "type": "string" },
+        "provider": { "type": "string" },
+        "model": { "type": "string" },
+        "assistantMode": { "type": "boolean" },
+        "allowTools": { "type": "boolean" },
+        "thinking": { "type": "string" }
+      }
+    },
+    "AgentStreamResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["streamId", "assistantMode", "allowTools", "event"],
+      "properties": {
+        "streamId": { "type": "string" },
+        "assistantMode": { "type": "boolean" },
+        "allowTools": { "type": "boolean" },
+        "event": { "type": "string" }
+      }
+    },
+    "AgentCodingStreamPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["messages", "model"],
+      "properties": {
+        "messages": {
+          "type": "array",
+          "items": {}
+        },
+        "model": { "type": "string" },
+        "provider": { "type": "string" },
+        "baseUrl": { "type": "string" },
+        "attachments": {
+          "type": "array",
+          "items": {}
+        },
+        "tools": {
+          "type": "array",
+          "items": {}
+        },
+        "think": { "type": "boolean" },
+        "temperature": { "type": "number" }
+      }
+    },
+    "AgentCancelStreamPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["streamId"],
+      "properties": {
+        "streamId": { "type": "string" }
+      }
+    },
+    "AgentCancelStreamResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["streamId", "canceled"],
+      "properties": {
+        "streamId": { "type": "string" },
+        "canceled": { "type": "boolean" }
+      }
+    },
+    "AgentCapabilitiesPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model"],
+      "properties": {
+        "model": { "type": "string" },
+        "provider": { "type": "string" },
+        "baseUrl": { "type": "string" }
+      }
+    },
+    "AgentCapabilitiesResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilities"],
+      "properties": {
+        "capabilities": {}
+      }
+    },
+    "MarketDataQuotePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["symbol"],
+      "properties": {
+        "symbol": { "type": "string" },
+        "market": { "type": "string" }
+      }
+    },
+    "MarketDataQuoteResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["quote"],
+      "properties": {
+        "quote": {}
+      }
+    },
+    "MarketDataHistoryPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["symbol"],
+      "properties": {
+        "symbol": { "type": "string" },
+        "market": { "type": "string" },
+        "interval": { "type": "string" },
+        "limit": { "type": "integer" }
+      }
+    },
+    "MarketDataHistoryResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candles"],
+      "properties": {
+        "candles": {
+          "type": "array",
+          "items": {}
+        },
+        "source": { "type": "string" },
+        "provider": { "type": "string" }
+      }
+    },
+    "NewsSearchPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["symbol"],
+      "properties": {
+        "symbol": { "type": "string" },
+        "market": { "type": "string" },
+        "limit": { "type": "integer" }
+      }
+    },
+    "NewsSearchResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["items"],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {}
+        },
+        "source": { "type": "string" },
+        "provider": { "type": "string" }
+      }
+    },
+    "SchedulerSchedulePayload": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "SchedulerListPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": { "type": "string" }
+      }
+    },
+    "SchedulerTaskIdPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string" }
+      }
+    },
+    "SchedulerTaskResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task"],
+      "properties": {
+        "task": {}
+      }
+    },
+    "SchedulerListResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tasks"],
+      "properties": {
+        "tasks": {
+          "type": "array",
+          "items": {}
+        }
+      }
+    },
+    "SttTranscribeAudioPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["audioDataUrl"],
+      "properties": {
+        "audioDataUrl": { "type": "string" },
+        "sttContext": { "type": "string" },
+        "referenceText": { "type": "string" },
+        "sttProviderOverride": { "type": "string" }
+      }
+    },
+    "SttTranscribeAudioResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text"],
+      "properties": {
+        "text": { "type": "string" },
+        "language": { "type": "string" },
+        "duration": { "type": "number" },
+        "model": { "type": "string" },
+        "speakerMatched": { "type": "boolean" },
+        "speakerScore": { "type": "number" },
+        "speakerThreshold": { "type": "number" },
+        "rejectedReason": { "type": "string" },
+        "sttContext": { "type": "string" },
+        "providerOverride": { "type": "string" }
+      }
+    },
+    "UiOpenPanelPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title"],
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "icon": { "type": "string" },
+        "badge": { "type": "string" }
+      }
+    },
+    "UiPostMessagePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["content"],
+      "properties": {
+        "id": { "type": "string" },
+        "role": { "type": "string" },
+        "content": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "thinking": { "type": "string" },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "UiUpdateMessagePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "patch"],
+      "properties": {
+        "id": { "type": "string" },
+        "patch": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "UiSetViewStatePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "icon": { "type": "string" },
+        "badge": { "type": "string" }
+      }
+    },
+    "UiPanelResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "opened": { "type": "boolean" },
+        "closed": { "type": "boolean" },
+        "cleared": { "type": "boolean" },
+        "updated": { "type": "boolean" },
+        "messageId": { "type": "string" }
+      }
+    },
+    "NotificationNotifyPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "body"],
+      "properties": {
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "severity": { "type": "string" },
+        "actions": {
+          "type": "array",
+          "items": {}
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "NotificationResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["notification"],
+      "properties": {
+        "notification": {}
+      }
+    },
+    "AssistantInboxCreateAlertPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "summary"],
+      "properties": {
+        "title": { "type": "string" },
+        "summary": { "type": "string" },
+        "severity": { "type": "string" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "requiresUserAttention": { "type": "boolean" }
+      }
+    },
+    "AssistantInboxResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["item"],
+      "properties": {
+        "item": {}
+      }
+    },
+    "CodeOpenLocalPreviewPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "cwd"],
+      "properties": {
+        "command": { "type": "string" },
+        "cwd": { "type": "string" },
+        "expectPort": { "type": "integer" },
+        "captureScreenshot": { "type": "boolean" },
+        "viewport": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "width": { "type": "integer" },
+            "height": { "type": "integer" }
+          }
+        }
+      }
+    },
+    "CodeCancelLocalPreviewPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sessionId"],
+      "properties": {
+        "sessionId": { "type": "string" }
+      }
+    },
+    "CodeLocalPreviewResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sessionId", "url", "panelOpened"],
+      "properties": {
+        "sessionId": { "type": "string" },
+        "url": { "type": "string" },
+        "panelOpened": { "type": "boolean" },
+        "screenshotArtifactId": { "type": "string" },
+        "session": {}
+      }
+    },
+    "WorkspacePathPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspacePath", "path"],
+      "properties": {
+        "workspacePath": { "type": "string" },
+        "path": { "type": "string" },
+        "startLine": { "type": "integer" },
+        "endLine": { "type": "integer" },
+        "maxBytes": { "type": "integer" },
+        "depth": { "type": "integer" },
+        "limit": { "type": "integer" }
+      }
+    },
+    "WorkspaceSearchPathsPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspacePath", "query"],
+      "properties": {
+        "workspacePath": { "type": "string" },
+        "query": { "type": "string" },
+        "mode": { "type": "string" },
+        "kind": { "type": "string" },
+        "limit": { "type": "integer" }
+      }
+    },
+    "WorkspaceSearchTextPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspacePath", "query"],
+      "properties": {
+        "workspacePath": { "type": "string" },
+        "query": { "type": "string" },
+        "path": { "type": "string" },
+        "regex": { "type": "boolean" },
+        "limit": { "type": "integer" }
+      }
+    },
+    "WorkspaceCreateDirPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspacePath", "path"],
+      "properties": {
+        "workspacePath": { "type": "string" },
+        "path": { "type": "string" },
+        "recursive": { "type": "boolean" }
+      }
+    },
+    "WorkspaceTransferPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspacePath", "sourcePath", "destinationPath"],
+      "properties": {
+        "workspacePath": { "type": "string" },
+        "sourcePath": { "type": "string" },
+        "destinationPath": { "type": "string" },
+        "overwrite": { "type": "boolean" }
+      }
+    },
+    "WorkspaceDeletePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspacePath", "path"],
+      "properties": {
+        "workspacePath": { "type": "string" },
+        "path": { "type": "string" },
+        "recursive": { "type": "boolean" }
+      }
+    },
+    "WorkspaceGenericResultData": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "WorkspaceWriteTextPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspacePath", "path", "content"],
+      "properties": {
+        "workspacePath": { "type": "string" },
+        "path": { "type": "string" },
+        "content": { "type": "string" }
+      }
+    },
+    "WorkspaceReadTextResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspacePath", "path", "resolvedPath", "content"],
+      "properties": {
+        "workspacePath": { "type": "string" },
+        "path": { "type": "string" },
+        "resolvedPath": { "type": "string" },
+        "content": { "type": "string" }
+      }
+    },
+    "WorkspaceWriteTextResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspacePath", "path", "resolvedPath", "length"],
+      "properties": {
+        "workspacePath": { "type": "string" },
+        "path": { "type": "string" },
+        "resolvedPath": { "type": "string" },
+        "length": { "type": "integer" },
+        "contentSha256": { "type": "string" }
+      }
+    },
+    "WorkspaceListDirResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspacePath", "path", "resolvedPath", "entries"],
+      "properties": {
+        "workspacePath": { "type": "string" },
+        "path": { "type": "string" },
+        "resolvedPath": { "type": "string" },
+        "entries": {
+          "type": "array",
+          "items": {}
+        }
+      }
+    },
+    "CommandRunPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "cwd"],
+      "properties": {
+        "command": { "type": "string" },
+        "cwd": { "type": "string" },
+        "timeoutMs": { "type": "integer" }
+      }
+    },
+    "CommandRunResultData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "cwd", "ok", "timedOut", "stdout", "stderr"],
+      "properties": {
+        "command": { "type": "string" },
+        "cwd": { "type": "string" },
+        "shell": { "type": "string" },
+        "timeoutMs": { "type": "integer" },
+        "durationMs": { "type": "integer" },
+        "ok": { "type": "boolean" },
+        "timedOut": { "type": "boolean" },
+        "exitCode": { "type": "integer" },
+        "stdout": { "type": "string" },
+        "stderr": { "type": "string" },
+        "stdoutTruncated": { "type": "boolean" },
+        "stderrTruncated": { "type": "boolean" }
+      }
+    },
+    "CommandSessionStartPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "cwd"],
+      "properties": {
+        "command": { "type": "string" },
+        "cwd": { "type": "string" },
+        "env": { "type": "object", "additionalProperties": true, "properties": {} }
+      }
+    },
+    "CommandSessionReadPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sessionId"],
+      "properties": {
+        "sessionId": { "type": "string" },
+        "stdoutAfter": { "type": "integer" },
+        "stderrAfter": { "type": "integer" },
+        "maxChars": { "type": "integer" }
+      }
+    },
+    "CommandSessionWritePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sessionId", "input"],
+      "properties": {
+        "sessionId": { "type": "string" },
+        "input": { "type": "string" }
+      }
+    },
+    "CommandSessionIdPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sessionId"],
+      "properties": {
+        "sessionId": { "type": "string" }
+      }
+    },
+    "CommandSessionResultData": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "GitReadPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspacePath"],
+      "properties": {
+        "workspacePath": { "type": "string" },
+        "paths": { "type": "array", "items": { "type": "string" } },
+        "limit": { "type": "integer" }
+      }
+    },
+    "GitReadResultData": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "ResearchSearchPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["query"],
+      "properties": {
+        "query": { "type": "string" },
+        "maxResults": { "type": "integer" }
+      }
+    },
+    "ResearchSearchResultData": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "ResearchExtractPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url"],
+      "properties": {
+        "url": { "type": "string" },
+        "extractDepth": { "type": "string" }
+      }
+    }
+  },
+  "actions": [
+    {
+      "key": "ttsSpeak",
+      "name": "core.tts.speak",
+      "permission": "core.tts",
+      "description": "Speak text through Galaxy core TTS.",
+      "payloadType": "TtsSpeakPayload",
+      "resultDataType": "TtsSpeakResultData"
+    },
+    {
+      "key": "ttsStop",
+      "name": "core.tts.stop",
+      "permission": "core.tts",
+      "description": "Stop the current Galaxy core TTS playback.",
+      "payloadType": "EmptyPayload",
+      "resultDataType": "EmptyResultData"
+    },
+    {
+      "key": "storageSet",
+      "name": "core.storage.set",
+      "permission": "core.storage",
+      "description": "Write extension-scoped state.",
+      "payloadType": "StorageSetPayload",
+      "resultDataType": "StorageValueResultData"
+    },
+    {
+      "key": "storageGet",
+      "name": "core.storage.get",
+      "permission": "core.storage",
+      "description": "Read extension-scoped state.",
+      "payloadType": "StorageGetPayload",
+      "resultDataType": "StorageValueResultData"
+    },
+    {
+      "key": "recordsUpsert",
+      "name": "core.records.upsert",
+      "permission": "core.storage",
+      "description": "Upsert an extension-scoped SQLite record.",
+      "payloadType": "RecordsUpsertPayload",
+      "resultDataType": "RecordsRecordResultData"
+    },
+    {
+      "key": "recordsList",
+      "name": "core.records.list",
+      "permission": "core.storage",
+      "description": "List extension-scoped SQLite records by collection.",
+      "payloadType": "RecordsListPayload",
+      "resultDataType": "RecordsListResultData"
+    },
+    {
+      "key": "recordsDelete",
+      "name": "core.records.delete",
+      "permission": "core.storage",
+      "description": "Delete an extension-scoped SQLite record.",
+      "payloadType": "RecordsDeletePayload",
+      "resultDataType": "RecordsRecordResultData"
+    },
+    {
+      "key": "filesWriteText",
+      "name": "core.files.writeText",
+      "permission": "fs.write",
+      "description": "Write a UTF-8 text file inside the extension workspace.",
+      "payloadType": "FilesWriteTextPayload",
+      "resultDataType": "FilesWriteResultData"
+    },
+    {
+      "key": "filesWriteBase64",
+      "name": "core.files.writeBase64",
+      "permission": "fs.write",
+      "description": "Write binary content inside the extension workspace from base64.",
+      "payloadType": "FilesWriteBase64Payload",
+      "resultDataType": "FilesWriteResultData"
+    },
+    {
+      "key": "filesReadText",
+      "name": "core.files.readText",
+      "permission": "fs.read",
+      "description": "Read a UTF-8 text file inside the extension workspace.",
+      "payloadType": "FilesPathPayload",
+      "resultDataType": "FilesReadTextResultData"
+    },
+    {
+      "key": "filesOpenText",
+      "name": "core.files.openText",
+      "permission": "fs.read",
+      "description": "Open a file from the extension workspace with the system app.",
+      "payloadType": "FilesPathPayload",
+      "resultDataType": "FilesPathResultData"
+    },
+    {
+      "key": "filesRevealInFinder",
+      "name": "core.files.revealInFinder",
+      "permission": "fs.read",
+      "description": "Reveal a file from the extension workspace in the system file manager.",
+      "payloadType": "FilesPathPayload",
+      "resultDataType": "FilesPathResultData"
+    },
+    {
+      "key": "artifactsRegister",
+      "name": "core.artifacts.register",
+      "permission": "core.artifacts",
+      "description": "Register an existing extension workspace file in Galaxy artifact store.",
+      "payloadType": "ArtifactRegisterPayload",
+      "resultDataType": "ArtifactResultData"
+    },
+    {
+      "key": "artifactsList",
+      "name": "core.artifacts.list",
+      "permission": "core.artifacts",
+      "description": "List artifacts owned by the extension.",
+      "payloadType": "ArtifactListPayload",
+      "resultDataType": "ArtifactListResultData"
+    },
+    {
+      "key": "artifactsReadText",
+      "name": "core.artifacts.readText",
+      "permission": "core.artifacts",
+      "description": "Read a bounded text range from an artifact owned by the extension.",
+      "payloadType": "ArtifactReadTextPayload",
+      "resultDataType": "ArtifactReadTextResultData"
+    },
+    {
+      "key": "artifactsOpen",
+      "name": "core.artifacts.open",
+      "permission": "core.artifacts",
+      "description": "Open an artifact owned by the extension.",
+      "payloadType": "ArtifactIdPayload",
+      "resultDataType": "ArtifactResultData"
+    },
+    {
+      "key": "artifactsReveal",
+      "name": "core.artifacts.reveal",
+      "permission": "core.artifacts",
+      "description": "Reveal an artifact owned by the extension.",
+      "payloadType": "ArtifactIdPayload",
+      "resultDataType": "ArtifactResultData"
+    },
+    {
+      "key": "agentRun",
+      "name": "core.agent.run",
+      "permission": "core.agent",
+      "description": "Run a one-shot request through the main Galaxy AI Agent.",
+      "payloadType": "AgentRunPayload",
+      "resultDataType": "AgentRunResultData"
+    },
+    {
+      "key": "agentStream",
+      "name": "core.agent.stream",
+      "permission": "core.agent",
+      "description": "Start a streaming request through the main Galaxy AI Agent.",
+      "payloadType": "AgentRunPayload",
+      "resultDataType": "AgentStreamResultData"
+    },
+    {
+      "key": "agentCodingStream",
+      "name": "core.agent.codingStream",
+      "permission": "core.agent",
+      "description": "Start one native Ollama coding model round using the protected Manual provider credential.",
+      "payloadType": "AgentCodingStreamPayload",
+      "resultDataType": "AgentStreamResultData"
+    },
+    {
+      "key": "agentCancelStream",
+      "name": "core.agent.cancelStream",
+      "permission": "core.agent",
+      "description": "Cancel an active extension-owned agent stream.",
+      "payloadType": "AgentCancelStreamPayload",
+      "resultDataType": "AgentCancelStreamResultData"
+    },
+    {
+      "key": "agentCapabilities",
+      "name": "core.agent.capabilities",
+      "permission": "core.agent",
+      "description": "Resolve Ollama model capabilities without exposing the Manual provider credential.",
+      "payloadType": "AgentCapabilitiesPayload",
+      "resultDataType": "AgentCapabilitiesResultData"
+    },
+    {
+      "key": "marketDataQuote",
+      "name": "core.marketData.quote",
+      "permission": "core.marketData",
+      "description": "Fetch a public stock quote snapshot through Galaxy core.",
+      "payloadType": "MarketDataQuotePayload",
+      "resultDataType": "MarketDataQuoteResultData"
+    },
+    {
+      "key": "marketDataHistory",
+      "name": "core.marketData.history",
+      "permission": "core.marketData",
+      "description": "Fetch public historical stock candles through Galaxy core.",
+      "payloadType": "MarketDataHistoryPayload",
+      "resultDataType": "MarketDataHistoryResultData"
+    },
+    {
+      "key": "newsSearch",
+      "name": "core.news.search",
+      "permission": "core.news",
+      "description": "Fetch public company news headlines through Galaxy core.",
+      "payloadType": "NewsSearchPayload",
+      "resultDataType": "NewsSearchResultData"
+    },
+    {
+      "key": "schedulerSchedule",
+      "name": "core.scheduler.schedule",
+      "permission": "core.scheduler",
+      "description": "Create a scheduled task through Galaxy core.",
+      "payloadType": "SchedulerSchedulePayload",
+      "resultDataType": "SchedulerTaskResultData"
+    },
+    {
+      "key": "schedulerList",
+      "name": "core.scheduler.list",
+      "permission": "core.scheduler",
+      "description": "List scheduled tasks.",
+      "payloadType": "SchedulerListPayload",
+      "resultDataType": "SchedulerListResultData"
+    },
+    {
+      "key": "schedulerCancel",
+      "name": "core.scheduler.cancel",
+      "permission": "core.scheduler",
+      "description": "Cancel a scheduled task.",
+      "payloadType": "SchedulerTaskIdPayload",
+      "resultDataType": "SchedulerTaskResultData"
+    },
+    {
+      "key": "schedulerRunNow",
+      "name": "core.scheduler.runNow",
+      "permission": "core.scheduler",
+      "description": "Run a scheduled task immediately.",
+      "payloadType": "SchedulerTaskIdPayload",
+      "resultDataType": "SchedulerTaskResultData"
+    },
+    {
+      "key": "sttTranscribeAudio",
+      "name": "core.stt.transcribeAudio",
+      "permission": "core.stt",
+      "description": "Transcribe an audio data URL through Galaxy core STT.",
+      "payloadType": "SttTranscribeAudioPayload",
+      "resultDataType": "SttTranscribeAudioResultData"
+    },
+    {
+      "key": "uiOpenPanel",
+      "name": "core.ui.openPanel",
+      "permission": "core.ui",
+      "description": "Open the extension secondary message panel in the main Galaxy screen.",
+      "payloadType": "UiOpenPanelPayload",
+      "resultDataType": "UiPanelResultData"
+    },
+    {
+      "key": "uiClosePanel",
+      "name": "core.ui.closePanel",
+      "permission": "core.ui",
+      "description": "Close the extension secondary message panel.",
+      "payloadType": "EmptyPayload",
+      "resultDataType": "UiPanelResultData"
+    },
+    {
+      "key": "uiPostMessage",
+      "name": "core.ui.postMessage",
+      "permission": "core.ui",
+      "description": "Append a message to the extension secondary message panel.",
+      "payloadType": "UiPostMessagePayload",
+      "resultDataType": "UiPanelResultData"
+    },
+    {
+      "key": "uiUpdateMessage",
+      "name": "core.ui.updateMessage",
+      "permission": "core.ui",
+      "description": "Update a message in the extension secondary message panel.",
+      "payloadType": "UiUpdateMessagePayload",
+      "resultDataType": "UiPanelResultData"
+    },
+    {
+      "key": "uiClearMessages",
+      "name": "core.ui.clearMessages",
+      "permission": "core.ui",
+      "description": "Clear messages from the extension secondary message panel.",
+      "payloadType": "EmptyPayload",
+      "resultDataType": "UiPanelResultData"
+    },
+    {
+      "key": "uiSetViewState",
+      "name": "core.ui.setViewState",
+      "permission": "core.ui",
+      "description": "Update extension secondary panel title and compact metadata.",
+      "payloadType": "UiSetViewStatePayload",
+      "resultDataType": "UiPanelResultData"
+    },
+    {
+      "key": "notificationsNotify",
+      "name": "core.notifications.notify",
+      "permission": "core.notifications",
+      "description": "Create a persistent in-app notification from an extension.",
+      "payloadType": "NotificationNotifyPayload",
+      "resultDataType": "NotificationResultData"
+    },
+    {
+      "key": "assistantInboxCreateAlert",
+      "name": "core.assistant.inbox.createAlert",
+      "permission": "core.assistant.inbox",
+      "description": "Create a persistent assistant inbox alert from an extension.",
+      "payloadType": "AssistantInboxCreateAlertPayload",
+      "resultDataType": "AssistantInboxResultData"
+    },
+    {
+      "key": "workspaceListDir",
+      "name": "core.workspace.listDir",
+      "permission": "fs.workspace",
+      "description": "List one directory inside a user workspace path.",
+      "payloadType": "WorkspacePathPayload",
+      "resultDataType": "WorkspaceListDirResultData"
+    },
+    {
+      "key": "workspaceReadText",
+      "name": "core.workspace.readText",
+      "permission": "fs.workspace",
+      "description": "Read a UTF-8 text file inside a user workspace path.",
+      "payloadType": "WorkspacePathPayload",
+      "resultDataType": "WorkspaceReadTextResultData"
+    },
+    {
+      "key": "workspaceStat",
+      "name": "core.workspace.stat",
+      "permission": "fs.workspace",
+      "description": "Read bounded metadata for a path inside a user workspace.",
+      "payloadType": "WorkspacePathPayload",
+      "resultDataType": "WorkspaceGenericResultData"
+    },
+    {
+      "key": "workspaceSearchPaths",
+      "name": "core.workspace.searchPaths",
+      "permission": "fs.workspace",
+      "description": "Search file and directory paths inside a user workspace.",
+      "payloadType": "WorkspaceSearchPathsPayload",
+      "resultDataType": "WorkspaceGenericResultData"
+    },
+    {
+      "key": "workspaceSearchText",
+      "name": "core.workspace.searchText",
+      "permission": "fs.workspace",
+      "description": "Search text or regex matches inside bounded workspace files.",
+      "payloadType": "WorkspaceSearchTextPayload",
+      "resultDataType": "WorkspaceGenericResultData"
+    },
+    {
+      "key": "workspaceWriteText",
+      "name": "core.workspace.writeText",
+      "permission": "fs.workspace",
+      "description": "Write a UTF-8 text file inside a user workspace path.",
+      "payloadType": "WorkspaceWriteTextPayload",
+      "resultDataType": "WorkspaceWriteTextResultData"
+    },
+    {
+      "key": "workspaceMkdir",
+      "name": "core.workspace.mkdir",
+      "permission": "fs.workspace",
+      "description": "Create a directory inside a user workspace.",
+      "payloadType": "WorkspaceCreateDirPayload",
+      "resultDataType": "WorkspaceGenericResultData"
+    },
+    {
+      "key": "workspaceMove",
+      "name": "core.workspace.move",
+      "permission": "fs.workspace",
+      "description": "Move or rename a path inside a user workspace.",
+      "payloadType": "WorkspaceTransferPayload",
+      "resultDataType": "WorkspaceGenericResultData"
+    },
+    {
+      "key": "workspaceCopy",
+      "name": "core.workspace.copy",
+      "permission": "fs.workspace",
+      "description": "Copy a path inside a user workspace.",
+      "payloadType": "WorkspaceTransferPayload",
+      "resultDataType": "WorkspaceGenericResultData"
+    },
+    {
+      "key": "workspaceDelete",
+      "name": "core.workspace.delete",
+      "permission": "fs.workspace",
+      "description": "Delete a path inside a user workspace after policy approval.",
+      "payloadType": "WorkspaceDeletePayload",
+      "resultDataType": "WorkspaceGenericResultData"
+    },
+    {
+      "key": "commandRun",
+      "name": "core.command.run",
+      "permission": "command.run",
+      "description": "Run a one-shot shell command through the Galaxy host command runner.",
+      "payloadType": "CommandRunPayload",
+      "resultDataType": "CommandRunResultData"
+    },
+    {
+      "key": "commandSessionStart",
+      "name": "core.command.session.start",
+      "permission": "command.session",
+      "description": "Start an extension-owned supervised command session.",
+      "payloadType": "CommandSessionStartPayload",
+      "resultDataType": "CommandSessionResultData"
+    },
+    {
+      "key": "commandSessionRead",
+      "name": "core.command.session.read",
+      "permission": "command.session",
+      "description": "Read bounded output from an extension-owned command session.",
+      "payloadType": "CommandSessionReadPayload",
+      "resultDataType": "CommandSessionResultData"
+    },
+    {
+      "key": "commandSessionWrite",
+      "name": "core.command.session.write",
+      "permission": "command.session",
+      "description": "Write stdin to an extension-owned command session.",
+      "payloadType": "CommandSessionWritePayload",
+      "resultDataType": "CommandSessionResultData"
+    },
+    {
+      "key": "commandSessionInterrupt",
+      "name": "core.command.session.interrupt",
+      "permission": "command.session",
+      "description": "Interrupt an extension-owned command session.",
+      "payloadType": "CommandSessionIdPayload",
+      "resultDataType": "CommandSessionResultData"
+    },
+    {
+      "key": "commandSessionKill",
+      "name": "core.command.session.kill",
+      "permission": "command.session",
+      "description": "Kill an extension-owned command session.",
+      "payloadType": "CommandSessionIdPayload",
+      "resultDataType": "CommandSessionResultData"
+    },
+    {
+      "key": "commandSessionList",
+      "name": "core.command.session.list",
+      "permission": "command.session",
+      "description": "List command sessions owned by the extension.",
+      "payloadType": "EmptyPayload",
+      "resultDataType": "CommandSessionResultData"
+    },
+    {
+      "key": "gitStatus",
+      "name": "core.git.status",
+      "permission": "fs.workspace",
+      "description": "Read a fixed concise Git status inside a user workspace.",
+      "payloadType": "GitReadPayload",
+      "resultDataType": "GitReadResultData"
+    },
+    {
+      "key": "gitDiff",
+      "name": "core.git.diff",
+      "permission": "fs.workspace",
+      "description": "Read a bounded Git diff inside a user workspace.",
+      "payloadType": "GitReadPayload",
+      "resultDataType": "GitReadResultData"
+    },
+    {
+      "key": "gitLog",
+      "name": "core.git.log",
+      "permission": "fs.workspace",
+      "description": "Read a bounded recent Git log inside a user workspace.",
+      "payloadType": "GitReadPayload",
+      "resultDataType": "GitReadResultData"
+    },
+    {
+      "key": "researchSearch",
+      "name": "core.research.search",
+      "permission": "network.outbound",
+      "description": "Search current web sources through the protected Galaxy research runtime.",
+      "payloadType": "ResearchSearchPayload",
+      "resultDataType": "ResearchSearchResultData"
+    },
+    {
+      "key": "researchExtract",
+      "name": "core.research.extract",
+      "permission": "network.outbound",
+      "description": "Extract readable content from one web URL through the protected Galaxy research runtime.",
+      "payloadType": "ResearchExtractPayload",
+      "resultDataType": "ResearchSearchResultData"
+    },
+    {
+      "key": "codeOpenLocalPreview",
+      "name": "core.code.openLocalPreview",
+      "permission": "preview.frontend",
+      "description": "Start a managed local frontend preview session and return its localhost URL.",
+      "payloadType": "CodeOpenLocalPreviewPayload",
+      "resultDataType": "CodeLocalPreviewResultData"
+    },
+    {
+      "key": "codeCancelLocalPreview",
+      "name": "core.code.cancelLocalPreview",
+      "permission": "preview.frontend",
+      "description": "Cancel a managed local frontend preview session.",
+      "payloadType": "CodeCancelLocalPreviewPayload",
+      "resultDataType": "CodeLocalPreviewResultData"
+    }
+  ]
+}
