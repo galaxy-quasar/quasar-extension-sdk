@@ -4,7 +4,12 @@
   "title": "Galaxy Quasar Extension Manifest",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "name", "version", "runtime"],
+  "required": [
+    "id",
+    "name",
+    "version",
+    "runtime"
+  ],
   "properties": {
     "id": {
       "type": "string",
@@ -25,16 +30,25 @@
     },
     "runtime": {
       "type": "string",
-      "enum": ["node", "python", "webview", "internal"]
+      "enum": [
+        "node",
+        "python",
+        "webview",
+        "internal"
+      ]
     },
     "permissions": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "default": []
     },
     "activationEvents": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "default": []
     },
     "networkOutbound": {
@@ -43,7 +57,10 @@
       "properties": {
         "allowedHosts": {
           "type": "array",
-          "items": { "type": "string", "minLength": 1 },
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
           "default": []
         }
       },
@@ -59,11 +76,23 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["name", "description", "inputSchema"],
+            "required": [
+              "name",
+              "description",
+              "inputSchema"
+            ],
             "properties": {
-              "name": { "type": "string", "minLength": 1 },
-              "description": { "type": "string", "minLength": 1 },
-              "inputSchema": { "type": "object" }
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "inputSchema": {
+                "type": "object"
+              }
             }
           }
         },
@@ -73,10 +102,19 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["name", "title"],
+            "required": [
+              "name",
+              "title"
+            ],
             "properties": {
-              "name": { "type": "string", "minLength": 1 },
-              "title": { "type": "string", "minLength": 1 }
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              }
             }
           }
         },
@@ -86,11 +124,29 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["id", "type", "title"],
+            "required": [
+              "id",
+              "type",
+              "title"
+            ],
             "properties": {
-              "id": { "type": "string", "minLength": 1 },
-              "type": { "type": "string", "minLength": 1 },
-              "title": { "type": "string", "minLength": 1 }
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "entry": {
+                "type": "string",
+                "minLength": 1,
+                "description": "UI entry module (relative to the extension folder, e.g. \"./ui/index.tsx\"). Required for views whose type is \"webview\" when the UI ships with the extension."
+              }
             }
           }
         }
